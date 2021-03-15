@@ -1,30 +1,40 @@
 import 'package:flutter/material.dart';
+import 'question.dart';
+import 'answer.dart';
 
 void main() => runApp(QuizioApp());
 
 class QuizioApp extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
-    return QuizioAppState();
+    return _QuizioAppState();
   }
 }
 
-class QuizioAppState extends State<QuizioApp> {
+class _QuizioAppState extends State<QuizioApp> {
+  var _qIndex = 0;
 
-  var qIndex = 0;
-
-  void answerQuestion() {
+  void _answerQuestion() {
     setState(() {
-      qIndex = qIndex + 1;
+      _qIndex = _qIndex + 1;
     });
   }
 
   @override
   Widget build(BuildContext ctx) {
-    var questions = [
-      'What\'s your favourite color?',
-      'What\'s your favourite animal?'
+    const questions = [
+      {
+        'question': 'What\'s your favourite color?',
+        'answers': ['blue', 'red', 'yellow', 'black']
+      },
+      {
+        'question': 'What\'s your favourite animal?',
+        'answers': ['horse', 'swan', 'dog', 'cat', 'spider']
+      },
+      {
+        'question': 'Where\'s your favourite vacation?',
+        'answers': ['mountains', 'seaside', 'desert', 'city', 'cruis']
+      }
     ];
     return MaterialApp(
       home: Scaffold(
@@ -37,21 +47,12 @@ class QuizioAppState extends State<QuizioApp> {
           children: [
             // referring to lists by index (starts at 0 in Dart)
             // can also be done: questions.elementAt(0)
-            Text(questions[qIndex]),
-            RaisedButton(
-              child: Text('Answer 1'),
-              onPressed: answerQuestion,
+            Question(
+              questions[_qIndex]['question'],
             ),
-            RaisedButton(
-              child: Text('Answer 2'),
-              onPressed: answerQuestion,
-            ),
-            RaisedButton(
-              child: Text('Answer 3'),
-              onPressed: () {
-                print("lalala");
-              },
-            ),
+            ...(questions[_qIndex]['answers'] as List<String>).map((answer) {
+              return Answer(answer, _answerQuestion);
+            }).toList(),
           ],
         ),
       ),

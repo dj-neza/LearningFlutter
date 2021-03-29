@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
-import 'answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 void main() => runApp(QuizioApp());
 
@@ -12,49 +12,58 @@ class QuizioApp extends StatefulWidget {
 }
 
 class _QuizioAppState extends State<QuizioApp> {
-  var _qIndex = 0;
+  final _questions = const [
+    {
+      'question': 'What\'s your favourite color?',
+      'answers': [
+        {'text': 'blue', 'score': 1},
+        {'text': 'red', 'score': 7},
+        {'text': 'black', 'score': 10},
+        {'text': 'yellow', 'score': 5},
+        {'text': 'pink', 'score': 3}
+      ],
+    },
+    {
+      'question': 'What\'s your favourite animal?',
+      'answers': [
+        {'text': 'horse', 'score': 3},
+        {'text': 'swan', 'score': 2},
+        {'text': 'dog', 'score': 1},
+        {'text': 'cat', 'score': 7},
+        {'text': 'spider', 'score': 10},
+      ],
+    },
+    {
+      'question': 'Where\'s your favourite vacation?',
+      'answers': [
+        {'text': 'seaside', 'score': 3},
+        {'text': 'cruise', 'score': 1},
+        {'text': 'desert', 'score': 8},
+        {'text': 'city', 'score': 6},
+      ],
+    }
+  ];
 
-  void _answerQuestion() {
+  var _qIndex = 0;
+  var _totalScore = 0;
+
+  void _answerQuestion(int score) {
     setState(() {
-      _qIndex = _qIndex + 1;
+      _qIndex += 1;
+      _totalScore += score;
     });
   }
 
   @override
   Widget build(BuildContext ctx) {
-    const questions = [
-      {
-        'question': 'What\'s your favourite color?',
-        'answers': ['blue', 'red', 'yellow', 'black']
-      },
-      {
-        'question': 'What\'s your favourite animal?',
-        'answers': ['horse', 'swan', 'dog', 'cat', 'spider']
-      },
-      {
-        'question': 'Where\'s your favourite vacation?',
-        'answers': ['mountains', 'seaside', 'desert', 'city', 'cruis']
-      }
-    ];
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('Quizio'),
         ),
-        body: Column(
-          // this is how to type the list - below is an example of a list
-          // of widgets
-          children: [
-            // referring to lists by index (starts at 0 in Dart)
-            // can also be done: questions.elementAt(0)
-            Question(
-              questions[_qIndex]['question'],
-            ),
-            ...(questions[_qIndex]['answers'] as List<String>).map((answer) {
-              return Answer(answer, _answerQuestion);
-            }).toList(),
-          ],
-        ),
+        body: _qIndex < _questions.length 
+          ? Quiz(answerQuestion: _answerQuestion, questions: _questions, qIndex: _qIndex)
+          : Result(_totalScore),
       ),
     );
   }

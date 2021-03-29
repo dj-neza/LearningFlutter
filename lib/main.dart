@@ -54,6 +54,13 @@ class _QuizioAppState extends State<QuizioApp> {
     });
   }
 
+  void _resetQuiz() {
+    setState(() {
+      _qIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext ctx) {
     return MaterialApp(
@@ -61,9 +68,15 @@ class _QuizioAppState extends State<QuizioApp> {
         appBar: AppBar(
           title: Text('Quizio'),
         ),
-        body: _qIndex < _questions.length 
-          ? Quiz(answerQuestion: _answerQuestion, questions: _questions, qIndex: _qIndex)
-          : Result(_totalScore),
+        body: _qIndex < _questions.length
+            ? Quiz(
+                answerQuestion: _answerQuestion,
+                questions: _questions,
+                qIndex: _qIndex)
+            : Result(
+                _totalScore,
+                _resetQuiz,
+              ),
       ),
     );
   }

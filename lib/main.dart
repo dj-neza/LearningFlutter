@@ -94,6 +94,49 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  List<Widget> _buildLandscapeContent(MediaQueryData mediaQuery,
+      PreferredSizeWidget appBar, Widget txListWidget) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'Show chart',
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+          Switch.adaptive(
+            value: _showChart,
+            onChanged: (newVal) => setState(() {
+              _showChart = newVal;
+            }),
+            activeColor: Theme.of(context).accentColor,
+          ),
+        ],
+      ),
+      _showChart
+          ? Container(
+              height: (mediaQuery.size.height) * 0.7 -
+                  appBar.preferredSize.height -
+                  mediaQuery.padding.top,
+              child: Chart(_recentTransactions),
+            )
+          : txListWidget,
+    ];
+  }
+
+  List<Widget> _buildPortraitContent(MediaQueryData mediaQuery,
+      PreferredSizeWidget appBar, Widget txListWidget) {
+    return [
+      Container(
+        height: (mediaQuery.size.height) * 0.35 -
+            appBar.preferredSize.height -
+            mediaQuery.padding.top,
+        child: Chart(_recentTransactions),
+      ),
+      txListWidget,
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final isLandscape =
@@ -132,42 +175,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            if (isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Show chart',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  Switch.adaptive(
-                    value: _showChart,
-                    onChanged: (newVal) => setState(() {
-                      _showChart = newVal;
-                    }),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
-                ],
-              ),
-            if (!isLandscape)
-              Container(
-                height: (MediaQuery.of(context).size.height) * 0.35 -
-                    appBar.preferredSize.height -
-                    MediaQuery.of(context).padding.top,
-                child: Chart(_recentTransactions),
-              ),
-            if (!isLandscape) txListWidget,
-            if (isLandscape)
-              _showChart
-                  ? Container(
-                      height: (MediaQuery.of(context).size.height) * 0.7 -
-                          appBar.preferredSize.height -
-                          MediaQuery.of(context).padding.top,
-                      child: Chart(_recentTransactions),
-                    )
-                  : txListWidget,
-          ],
+          children: isLandscape
+              ? _buildLandscapeContent(
+                  MediaQuery.of(context), appBar, txListWidget)
+              : _buildPortraitContent(
+                  MediaQuery.of(context), appBar, txListWidget),
         ),
       ),
     );

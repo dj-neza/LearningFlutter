@@ -1,6 +1,6 @@
 import '../models/transaction.dart';
+import './transaction_item.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
@@ -32,59 +32,9 @@ class TransactionList extends StatelessWidget {
           })
         : ListView.builder(
             itemBuilder: (ctx, index) {
-              return Card(
-                margin: EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 5,
-                ),
-                elevation: 5,
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: FittedBox(
-                        child: Text(
-                          '${transactions[index].amount.toStringAsFixed(2)} \$',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  title: Text(
-                    transactions[index].title,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.black),
-                  ),
-                  subtitle: Text(
-                    DateFormat.yMMMd().format(transactions[index].date),
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 14,
-                        color: Colors.grey),
-                  ),
-                  trailing: MediaQuery.of(context).size.width > 360
-                      ? FlatButton.icon(
-                          onPressed: () =>
-                              removeTransaction(transactions[index].id),
-                          icon: Icon(Icons.delete),
-                          label: Text('Delete'),
-                          textColor: Colors.grey,
-                        )
-                      : IconButton(
-                          onPressed: () =>
-                              removeTransaction(transactions[index].id),
-                          icon: Icon(Icons.delete),
-                          color: Colors.grey,
-                        ),
-                ),
-              );
+              return TransactionItem(
+                  transaction: transactions[index],
+                  removeTransaction: removeTransaction);
             },
             itemCount: transactions.length,
           );

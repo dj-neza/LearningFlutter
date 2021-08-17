@@ -11,6 +11,7 @@ class CategoriesPage extends StatelessWidget {
         title: Text('MyMeals'),
       ),
       body: GridView(
+        padding: EdgeInsets.all(16),
         children: DUMMY_CATEGORIES
             .map((catData) => CategoryItem(
                   color: catData.color,
@@ -20,8 +21,8 @@ class CategoriesPage extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,
           childAspectRatio: 3 / 2,
-          mainAxisSpacing: 20,
-          crossAxisSpacing: 20,
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 16,
         ),
       ),
     );

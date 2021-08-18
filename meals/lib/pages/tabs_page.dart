@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './favorites_page.dart';
 import './categories_page.dart';
+import '../widgets/main_drawer.dart';
 
 class TabsPage extends StatefulWidget {
   @override
@@ -34,6 +35,7 @@ class _TabsPageState extends State<TabsPage> {
         title: Text(_pages[_selectedPageIndex]['title'] as String),
       ),
       body: _pages[_selectedPageIndex]['page'] as Widget,
+      drawer: MainDrawer(),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
         backgroundColor: Theme.of(context).primaryColor,

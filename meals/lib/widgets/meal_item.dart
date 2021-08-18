@@ -45,7 +45,6 @@ class MealItem extends StatelessWidget {
     Navigator.of(context).pushNamed(
       MealDetailsPage.routeName,
       arguments: {
-        'title': title,
         'id': id,
       },
     );

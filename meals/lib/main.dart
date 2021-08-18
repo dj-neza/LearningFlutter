@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import './categories_page.dart';
+import 'pages/meals_page.dart';
+import 'pages/categories_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
             ),
       ),
       home: CategoriesPage(),
+      routes: {
+        MealsPage.routeName: (ctx) => MealsPage(),
+      },
     );
   }
 }

@@ -1,16 +1,4 @@
-# meals
+# MyMealsApp
 
-A new Flutter project.
+A very simple app to help me learn Flutter through practical examples. In MyMeals you can browse food categories and get meal recipes, there's options of filtering based on gluten, lactose, vegan or vegetarian preferences and you can mark recipes as favorite. 
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
